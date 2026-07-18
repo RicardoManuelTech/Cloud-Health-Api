@@ -1,7 +1,14 @@
 from flask import Flask, jsonify
 import platform
 import datetime
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 APP_NAME = "Cloud Health API"
@@ -19,6 +26,7 @@ def home():
 
 @app.route("/health")
 def health():
+    logger.info("GET /health request received")
     return jsonify({
         "status": "healthy",
         "timestamp": datetime.datetime.utcnow().isoformat() + "Z"
@@ -36,6 +44,7 @@ def metrics():
 
 @app.route("/version")
 def version():
+    logger.info("GET /version request received")
     return jsonify({
         "application": APP_NAME,
         "version": VERSION
