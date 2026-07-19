@@ -50,6 +50,9 @@ def version():
         "version": VERSION
     })
 
+@app.route("/error")
+def error():
+    raise Exception("Test exception")
 
 @app.errorhandler(404)
 def not_found(error):
@@ -58,6 +61,14 @@ def not_found(error):
         "message": "The requested resource does not exist."
     }), 404
 
+@app.errorhandler(Exception)
+def handle_exception(error):
+    logger.exception("Unhandled exception")
+
+    return jsonify({
+        "error": "Internal Server Error",
+        "message": "An unexpected error occurred."
+    }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

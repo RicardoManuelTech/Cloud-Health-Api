@@ -27,3 +27,15 @@ def test_not_found_error():
 
     assert data["error"] == "Not Found"
     assert data["message"] == "The requested resource does not exist."
+
+
+def test_internal_server_error():
+    client = app.test_client()
+    response = client.get("/error")
+
+    assert response.status_code == 500
+
+    data = response.get_json()
+
+    assert data["error"] == "Internal Server Error"
+    assert data["message"] == "An unexpected error occurred."
