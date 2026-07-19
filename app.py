@@ -29,7 +29,7 @@ def health():
     logger.info("GET /health request received")
     return jsonify({
         "status": "healthy",
-        "timestamp": datetime.datetime.utcnow().isoformat() + "Z"
+        "timestamp": datetime.datetime.now(datetime.UTC).isoformat()
     })
 
 
