@@ -51,5 +51,13 @@ def version():
     })
 
 
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "error": "Not Found",
+        "message": "The requested resource does not exist."
+    }), 404
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

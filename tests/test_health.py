@@ -15,3 +15,15 @@ def test_version_endpoint():
     assert response.status_code == 200
     data = json.loads(response.data)
     assert data["version"] == "1.0.0"
+
+
+def test_not_found_error():
+    client = app.test_client()
+    response = client.get("/does-not-exist")
+
+    assert response.status_code == 404
+
+    data = response.get_json()
+
+    assert data["error"] == "Not Found"
+    assert data["message"] == "The requested resource does not exist."
