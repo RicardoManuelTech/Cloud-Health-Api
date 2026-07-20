@@ -39,3 +39,14 @@ def test_internal_server_error():
 
     assert data["error"] == "Internal Server Error"
     assert data["message"] == "An unexpected error occurred."
+
+def test_readiness_endpoint():
+    client = app.test_client()
+    response = client.get("/ready")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+
+    assert data["status"] == "ready"
+    assert data["application"] == "Cloud Health API"

@@ -32,6 +32,12 @@ def health():
         "timestamp": datetime.datetime.now(datetime.UTC).isoformat()
     })
 
+@app.route("/ready")
+def ready():
+    return jsonify({
+        "status": "ready",
+        "application": APP_NAME
+    })
 
 @app.route("/metrics")
 def metrics():
