@@ -50,3 +50,14 @@ def test_readiness_endpoint():
 
     assert data["status"] == "ready"
     assert data["application"] == "Cloud Health API"
+
+def test_uptime_in_health():
+    client = app.test_client()
+    response = client.get("/health")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+
+    assert "uptime_seconds" in data
+    assert isinstance(data["uptime_seconds"], (int, float))
