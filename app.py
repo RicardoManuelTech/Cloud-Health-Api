@@ -15,6 +15,7 @@ app = Flask(__name__)
 APP_NAME = "Cloud Health API"
 VERSION = "1.0.0"
 START_TIME = time.time()
+STARTED_AT = datetime.datetime.now(datetime.UTC).isoformat()
 
 @app.route("/")
 def home():
@@ -31,6 +32,7 @@ def health():
     return jsonify({
         "status": "healthy",
         "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
+        "started_at": STARTED_AT,
         "uptime_seconds": round(time.time() - START_TIME, 2)
     })
 

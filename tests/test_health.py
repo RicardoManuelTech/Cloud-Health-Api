@@ -61,3 +61,14 @@ def test_uptime_in_health():
 
     assert "uptime_seconds" in data
     assert isinstance(data["uptime_seconds"], (int, float))
+
+def test_start_time_in_health():
+    client = app.test_client()
+    response = client.get("/health")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+
+    assert "started_at" in data
+    assert data["started_at"].endswith("+00:00")
